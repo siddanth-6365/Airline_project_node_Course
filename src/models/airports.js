@@ -6,20 +6,17 @@ module.exports = (sequelize, DataTypes) => {
   class Airports extends Model {
 
     static associate(models) {
-      this.belongsTo(models.City, {
+       this.belongsTo(models.City, {
         foreignKey: 'cityId',
-        onDelete: 'CASCADE',
-        // onUpdate:'CASCADE'
       });
-
-      this.hasMany(models.flight, {
-        foreignKey: 'depature',
-        onDelete: 'CASCADE',
-      })
-      this.hasMany(models.flight, {
-        foreignKey: 'arrival',
-        onDelete: 'CASCADE',
-      })
+      this.hasMany(models.Flight, {
+        foreignKey: 'departureAirportId',
+        onDelete: 'CASCADE'
+      });
+      this.hasMany(models.Flight, {
+        foreignKey: 'arrivalAirportId',
+        onDelete: 'CASCADE'
+      });
     }
   }
   Airports.init({
@@ -41,8 +38,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       // no unique because one city can have many airports
-
-
     }
   }, {
     sequelize,

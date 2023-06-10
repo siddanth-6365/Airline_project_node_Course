@@ -45,9 +45,7 @@ class CrudOperations {
 
     async getAll(data) {
         try {
-            const responce = await this.model.findAll({
-                attributes: ['modelNumber', 'capacity']
-            });
+            const responce = await this.model.findAll();
             return responce;
         }
         catch (error) {
@@ -55,6 +53,7 @@ class CrudOperations {
             throw error;
         }
     }
+    
 
     async update(id, data) {
         try {

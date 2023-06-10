@@ -1,76 +1,89 @@
 "use strict";
+
 /** @type {import('sequelize-cli').Migration} */
+
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("flights", {
+    await queryInterface.createTable("Flights", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      Flightid: { 
+
+      flightNumber: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+
+      airplaneId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: "airlines",
           key: "id",
         },
-        onDelete: "cascade",
+        onDelete: "CASCADE",
       },
-      depature: {
+
+      departureAirportId: {
         type: Sequelize.STRING,
         allowNull: false,
         references: {
           model: "airports",
           key: "code",
         },
-        onDelete: "cascade",
+        onDelete: "CASCADE",
       },
-      arrival: {
+
+      arrivalAirportId: {
         type: Sequelize.STRING,
         allowNull: false,
         references: {
           model: "airports",
           key: "code",
         },
-        onDelete: "cascade",
+        onDelete: "CASCADE",
       },
-      startTime: {
+
+      arrivalTime: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      endTime: {
+
+      departureTime: {
         type: Sequelize.DATE,
         allowNull: false,
       },
+
       price: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      Date: {
-        type: Sequelize.DATE,
-        allowNull: false,
+
+      boardingGate: {
+        type: Sequelize.STRING,
       },
-      Duration: {
+
+      totalSeats: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      noofStops: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-      },
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
       },
+
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
       },
     });
   },
+
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("flights");
+    await queryInterface.dropTable("Flights");
   },
 };
