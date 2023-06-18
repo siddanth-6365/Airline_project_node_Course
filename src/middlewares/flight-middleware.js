@@ -1,6 +1,7 @@
 const { StatusCodes } = require("http-status-codes")
 const { errorResponse } = require("../utils/common")
-
+const { AppErrors} = require("../utils")
+ 
 const validateCreateRequest = (req, res, next) => {
     const x = new Date(req.body.departureTime);
     const y = new Date(req.body.arrivalTime);
@@ -19,7 +20,7 @@ const validateCreateRequest = (req, res, next) => {
 function validateUpdateSeatsRequest(req, res, next) {
     if(!req.body.seats) {
         errorResponse.message = 'Something went wrong while creating flight';
-        errorResponse.error = new AppError(['seats not found in the incoming request in the correct form'], StatusCodes.BAD_REQUEST);
+        errorResponse.error = new AppErrors(['seats not found in the incoming request in the correct form'], StatusCodes.BAD_REQUEST);
         return res
                 .status(StatusCodes.BAD_REQUEST)
                 .json(errorResponse);

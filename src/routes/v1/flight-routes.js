@@ -19,7 +19,7 @@ router.get("/:id", FlightController.getFlight);
 // router.delete("/:id", FlightController.destroyAirport);
 
 router.patch(
-  "/seats",
+  "/:id/seats",
   FlightMiddlewares.validateUpdateSeatsRequest,
   FlightController.updateSeats
 );
