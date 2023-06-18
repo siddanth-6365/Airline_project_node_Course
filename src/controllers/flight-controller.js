@@ -30,9 +30,9 @@ async function createFlight(req, res) {
 
 async function getAllFlights(req, res) {
   try {
-    const Flight = await FlightServices.getAllFlights(req.query);
+    const Flights = await FlightServices.getAllFlights(req.query);
     successResponse.message = "Flighst data reterived successfully";
-    successResponse.data = Flight;
+    successResponse.data = Flights;
     return res.status(StatusCodes.CREATED).json(successResponse);
   } catch (error) {
     errorResponse.message = error.message;
@@ -43,7 +43,39 @@ async function getAllFlights(req, res) {
   }
 }
 
+async function getFlight(req, res) {
+  try {
+    const flight = await FlightServices.getFlight(req.params.id);
+    successResponse.message = "Flight data reterive successfully";
+    successResponse.data = flight;
+    return res.status(StatusCodes.CREATED).json(successResponse);
+  } catch (err) {
+    errorResponse.message = err.message;
+    errorResponse.data = { err };
+    return res.status(err.StatusCode).json(errorResponse);
+  }
+}
+
+async function updateSeats(req, res) {
+  try {
+    const respond = await FlightServices.updateSeats({
+      flightId: req.body.flightId,
+      seats: req.body.seats,
+      dec: req.body.dec,
+    });
+    successResponse.message = "Flight data updated successfully";
+    successResponse.data = respond;
+    return res.status(StatusCodes.CREATED).json(successResponse);
+  } catch (err) {
+    errorResponse.message = err.message;
+    errorResponse.data = { err };
+    return res.status(err.StatusCode).json(errorResponse);
+  }
+}
+
 module.exports = {
   createFlight,
   getAllFlights,
+  getFlight,
+  updateSeats,
 };

@@ -1,5 +1,5 @@
 const CrudOperations = require("./crud-repo");
-const { Flight, Airports, Airline , City } = require("../models/index");
+const { Flight, Airports, Airline, City } = require("../models/index");
 const { Sequelize } = require("sequelize");
 
 class CityRepo extends CrudOperations {
@@ -28,10 +28,10 @@ class CityRepo extends CrudOperations {
               Sequelize.col("DepatureAirport_Details.code")
             ),
           },
-          include:{
-            model:City,
-            required:true
-        }
+          include: {
+            model: City,
+            required: true,
+          },
         },
         {
           model: Airports,
@@ -42,21 +42,31 @@ class CityRepo extends CrudOperations {
               "=",
               Sequelize.col("ArrivalAirport_Details.code")
             ),
-            col2:Sequelize.where(
-                Sequelize.col("flight.arrivalAirportId"),
-                "=",
-                Sequelize.col("ArrivalAirport_Details.code")
+            col2: Sequelize.where(
+              Sequelize.col("flight.arrivalAirportId"),
+              "=",
+              Sequelize.col("ArrivalAirport_Details.code")
             ),
           },
-          include:{
-            model:City,
-            required:true
-        }
+          include: {
+            model: City,
+            required: true,
+          },
         },
-        
       ],
     });
     return response;
+  }
+
+  async updateRemainingSeats(flightId, seats, dec = true) {
+    const flight  = await Flight.findByPk(flightId);
+    if (dec) {
+      const decreaseSeats = await flight.decrement('totalSeats', { by: seats });
+      return decreaseSeats; 
+    } else {
+      const IncreaseSeats = await flight.increment("totalSeats", { by: seats });
+      return IncreaseSeats;
+    }
   }
 }
 module.exports = CityRepo;

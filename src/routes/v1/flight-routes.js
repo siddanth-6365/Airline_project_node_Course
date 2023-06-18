@@ -5,18 +5,23 @@ const { FlightMiddlewares } = require("../../middlewares");
 
 const router = express.Router();
 
-//    /api/v1/airport  POST request
-router.post("/",
+//    /api/v1/flight  POST request
+router.post(
+  "/",
   FlightMiddlewares.validateCreateRequest,
   FlightController.createFlight
 );
 
 router.get("/", FlightController.getAllFlights);
 
-// router.get("/:id", FlightController.getAirport);
+router.get("/:id", FlightController.getFlight);
 
 // router.delete("/:id", FlightController.destroyAirport);
 
-// router.patch("/:id", FlightController.updateAirport);
+router.patch(
+  "/seats",
+  FlightMiddlewares.validateUpdateSeatsRequest,
+  FlightController.updateSeats
+);
 
 module.exports = router;
